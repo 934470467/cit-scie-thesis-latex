@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.8.6)  18 JAN 2026 23:54
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.8.6)  22 JAN 2026 18:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1389,7 +1389,7 @@ Package fancyhdr Warning: \footskip is too small (17.07182pt):
 
 
 ]
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 569.
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 580.
 
 
 
@@ -1432,10 +1432,10 @@ Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: A9FEE6FEAC14BE8ACCDFBC1C0012E5DF;5377.
  ) 
 Here is how much of TeX's memory you used:
- 34759 strings out of 473832
- 763598 string characters out of 5729482
- 1309939 words of memory out of 5000000
- 57200 multiletter control sequences out of 15000+600000
+ 34777 strings out of 473832
+ 764147 string characters out of 5729482
+ 1310110 words of memory out of 5000000
+ 57218 multiletter control sequences out of 15000+600000
  574617 words of font info for 172 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  107i,12n,113p,1237b,978s stack positions out of 10000i,1000n,20000p,200000b,200000s

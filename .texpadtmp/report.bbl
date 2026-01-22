@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{#1}
 \expandafter\ifx\csname urlstyle\endcsname\relax\else
@@ -11,10 +11,40 @@
   \let\eprint\href
 \fi
 
+\bibitem[{刘绍锴}(2024)]{面向文档图像恢复的建模与学习方法研究}
+{刘绍锴}.
+\newblock 面向文档图像恢复的建模与学习方法研究\allowbreak[J].
+\newblock 中国科学技术大学博士学位论文, 2024.
+
+\bibitem[{杜泽炎}\ 等(2019){杜泽炎} and {任明武}]{一种在低质量图像上提高字符识别率的深度学习框架}
+{杜泽炎}, {任明武}.
+\newblock 一种在低质量图像上提高字符识别率的深度学习框架\allowbreak[J].
+\newblock 计算机与数字工程, 2019.
+
+\bibitem[{曾海霖}(2024)]{复杂文档图像上手写文本行提取与识别方法的研究}
+{曾海霖}.
+\newblock 复杂文档图像上手写文本行提取与识别方法的研究\allowbreak[J].
+\newblock 电子科技大学硕士学位论文, 2024.
+
 \bibitem[Brown et~al.(2023)Brown and Green]{TransformerInVision}
 BROWN A, GREEN B.
 \newblock Vision transformer for image classification\allowbreak[C]//\allowbreak
 Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition.
 \newblock 2023: 4567-4576.
+
+\bibitem[Doe et~al.(2022)Doe and Smith]{DeepLearningForImageRecognition}
+DOE J, SMITH J.
+\newblock Deep learning for image recognition\allowbreak[J].
+\newblock IEEE Transactions on Pattern Analysis and Machine Intelligence, 2022, 44\allowbreak (3): 123-135.
+
+\bibitem[{李贺香}(2021)]{超分辨率重建在低质量文本图像识别上的应用}
+{李贺香}.
+\newblock 超分辨率重建在低质量文本图像识别上的应用\allowbreak[J].
+\newblock 哈尔滨理工大学工学硕士学位论文, 2021.
+
+\bibitem[{贾锈闳}(2020)]{基于深度学习的低质量文档图像二值化算法研究}
+{贾锈闳}.
+\newblock 基于深度学习的低质量文档图像二值化算法研究\allowbreak[J].
+\newblock 湖北工业大学硕士学位论文, 2020.
 
 \end{thebibliography}

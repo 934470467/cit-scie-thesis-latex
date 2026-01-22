@@ -409,7 +409,7 @@
 {\clearpage}
 
 % 11. 参考文献格式
-\setcitestyle{open={【},close={】},citesep={,},super}
+\setcitestyle{open={[},close={]},citesep={,},super}
 
 \AtBeginEnvironment{thebibliography}{
     \songti\fontsize{10.5pt}{20pt}\selectfont
