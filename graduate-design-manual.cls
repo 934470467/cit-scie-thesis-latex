@@ -14,14 +14,15 @@
 \RequirePackage{titletoc}
 \RequirePackage{subcaption}
 \RequirePackage{fancyhdr}
+\RequirePackage{xcolor}
 \RequirePackage{amsmath, amssymb, mathtools}
 \RequirePackage{graphicx}
 \RequirePackage{float}
 \RequirePackage[labelfont=bf,justification=centering]{caption}
 \RequirePackage{tabularx, booktabs, longtable, multirow}
 \RequirePackage[superscript]{cite}
-\renewcommand\citeleft{【}
-\renewcommand\citeright{】}
+\renewcommand\citeleft{[}
+\renewcommand\citeright{]}
 \RequirePackage[pdfusetitle, hidelinks]{hyperref}
 \RequirePackage[numbers,super,square]{gbt7714}
 \RequirePackage{tikz}
@@ -50,26 +51,35 @@
 
 \xeCJKsetup{CJKglue=\hspace{0.2pt plus 0.05pt}}
 
-%正文小四号，固定行距20pt，字间距加宽0.2pt
 \renewcommand{\normalsize}{%
-    \songti\fontsize{12pt}{20pt}\selectfont
-    \xeCJKsetup{CJKglue=\hspace{0.2pt plus 0.05pt}} % 字间距加宽 0.2pt
+    \songti
+    \Times
+    \fontsize{12pt}{18pt}\selectfont
+    \xeCJKsetup{CJKglue=\hspace{0.2pt plus 0.05pt}}
 }
+
 \setlength{\parskip}{0pt}
-\AtBeginEnvironment{tabular}{\fontsize{10.5pt}{14pt}\selectfont}
-\AtBeginEnvironment{tabularx}{\fontsize{10.5pt}{14pt}\selectfont}
-\AtBeginEnvironment{longtable}{\fontsize{10.5pt}{14pt}\selectfont}
+\AtBeginEnvironment{tabular}{
+    \songti\Times\fontsize{10.5pt}{15.75pt}\selectfont
+}
+\AtBeginEnvironment{tabularx}{
+    \songti\Times\fontsize{10.5pt}{15.75pt}\selectfont
+}
+\AtBeginEnvironment{longtable}{
+    \songti\Times\fontsize{10.5pt}{15.75pt}\selectfont
+}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 % 2. 版面设置
 \geometry{
     a4paper,
-    top=2.5cm,
-    bottom=2.1cm,
-    inner=2.6cm,      
-    outer=2.1cm,      
-    headheight=20pt,
-    headsep=0.4cm,    
-    footskip=0.6cm    
+    top=2.5cm,          % 上边距
+    bottom=2.5cm,       % 下边距
+    left=3.0cm,         % 左边距
+    right=3.0cm,        % 右边距
+    bindingoffset=0.5cm,% 装订线（左侧 0.5cm）
+    headheight=15pt,    % 页眉高度
+    headsep=0.5cm,      % 算式：top(2.5) - 页眉(1.5) - headheight 约等于 0.5cm
+    footskip=0.75cm     % 算式：bottom(2.5) - 页脚(1.75) = 0.75cm
 }
 
 \raggedbottom
@@ -85,9 +95,12 @@
 
 \setlist[itemize,1]{
     label=\textbullet,
-    leftmargin=*, 
-    itemindent=2em,
-    labelsep=0em,
+    labelindent=1em,
+    labelwidth=1em,
+    labelsep=0pt,
+    leftmargin=2em,
+    itemindent=0pt,
+    listparindent=0pt,
     align=left,
     nosep
 }
@@ -108,62 +121,49 @@
 % 4. 页眉页脚
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[C]{\fontsize{10.5pt}{12pt}\kai{计算机信息工程学院毕业设计说明书}}
 \renewcommand{\headrulewidth}{0.4pt}
-\fancyfoot[C]{\songti\fontsize{12pt}{20pt}\selectfont\thepage}
 
+% 全局奇偶页页眉设置
+\fancyhead[CO]{% 奇数页居中
+    \songti\fontsize{9pt}{11pt}\selectfont 计算机信息工程学院毕业设计说明书
+}
+\fancyhead[CE]{% 偶数页居中
+    \songti\fontsize{9pt}{11pt}\selectfont \@title%
+}
+
+% 页脚设置
+\fancyfoot[C]{\Times\fontsize{9pt}{11pt}\selectfont\thepage}
 \fancypagestyle{abstract}{
-    \fancyhf{}
-    \fancyhead[C]{\fontsize{10.5pt}{12pt}\kai{计算机信息工程学院毕业设计说明书}}
-    \fancyfoot{}
+    \pagestyle{fancy} % 直接使用标准奇偶页眉
 }
 \fancypagestyle{englishabstract}{
-    \fancyhf{}
-    \fancyhead[C]{\fontsize{10.5pt}{12pt}\selectfont\Times Abstract}
-    \fancyfoot{}
+    \pagestyle{fancy} % 直接使用标准奇偶页眉
 }
 
 % 5. 标题格式
-\setcounter{secnumdepth}{4} 
+\setcounter{secnumdepth}{3}
 
-% 第1章：二号黑体(22pt)，居中
-% 段前1.5行(30pt)，段后1行(20pt)
+% 一级标题：二号黑体加粗，居中，段前段后0.5行
 \titleformat{\section}[block]
-    {\centering\bfseries\heiti\fontsize{22pt}{20pt}\selectfont} 
-    {\leavevmode\hrule height 0pt\relax 第{\Times\arabic{section}}章}
-    {1em}{}
+    {\centering\bfseries\heiti\fontsize{22pt}{33pt}\selectfont}
+    {第{\Times\arabic{section}}章}
+    {0.5em}{}
+\titlespacing*{\section}{0pt}{0.5\baselineskip}{0.5\baselineskip}
 
-\titlespacing*{\section}{0pt}{1.5\baselineskip}{1\baselineskip}
-
-% 1.1：三号黑体(16pt)，左对齐
-% 段前0.5行(10pt)，段后0.5行(10pt)
-\titleformat{\subsection}
-    {\bfseries\heiti\fontsize{16pt}{20pt}\selectfont}
-    {{\Times\arabic{section}.\arabic{subsection}}}
-    {1em}{}
+% 二级标题：三号黑体加粗，顶格居左，1.5倍行距
+\titleformat{\subsection}[block]
+    {\bfseries\heiti\fontsize{16pt}{24pt}\selectfont}
+    {\Times\arabic{section}.\arabic{subsection}}
+    {0.5em}{}
 \titlespacing*{\subsection}{0pt}{0.5\baselineskip}{0.5\baselineskip}
 
-% 1.1.1：四号黑体(14pt)，左对齐
-% 段前0.5行(10pt)，段后0.5行(10pt)
-\titleformat{\subsubsection}
-    {\bfseries\heiti\fontsize{14pt}{20pt}\selectfont}
-    {{\Times\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}}
-    {1em}{}
+% 三级标题：四号黑体加粗，顶格居左，1.5倍行距
+\titleformat{\subsubsection}[block]
+    {\bfseries\heiti\fontsize{14pt}{21pt}\selectfont}
+    {\Times\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+    {0.5em}{}
 \titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0.5\baselineskip}
 
-% 1. (paragraph)：小四号黑体(12pt)，左对齐
-% 段前0.5行(10pt)，段后0.5行(10pt)
-\titleformat{\paragraph}[block]
-    {\bfseries\heiti\fontsize{12pt}{20pt}\selectfont}
-    {{\Times\arabic{paragraph}.}}
-    {0.5em}{}
-\titlespacing*{\paragraph}{0pt}{0.5\baselineskip}{0.5\baselineskip}
-\titleformat{name=\section,numberless}[block]
-    {\centering\bfseries\heiti\fontsize{22pt}{20pt}\selectfont} 
-    {\leavevmode\hrule height 0pt\relax}
-    {0pt}{}
-\titlespacing*{name=\section,numberless}{0pt}{1.5\baselineskip}{1\baselineskip}
-\titlespacing*{\section}{0pt}{1.5\baselineskip}{1\baselineskip}
 % 6. 封面绘制辅助宏
 \newcommand{\DynamicUnderline}[1]{%
     \settowidth{\@tempdima}{\strut\centering\textbf{\zhongsong\fontsize{18pt}{18pt}\selectfont #1}}%
@@ -255,109 +255,131 @@
     \newpage
 }
 
-%前言
-\newenvironment{preamble}
+% 独创性声明
+\newenvironment{originalitystatement}
 {
     \clearpage
-    \section*{前言} 
-    \thispagestyle{fancy}
-    \fancyfoot[C]{\songti\fontsize{9pt}{11pt}\selectfont\thepage} 
+    \thispagestyle{empty}
+    
+    % 标题
+    \begin{center}
+        {\songti\bfseries\fontsize{22pt}{33pt}\selectfont 毕业论文（设计）独创性声明}
+    \end{center}
+    
+    \vspace{1.5\baselineskip}
+    
+    % 正文：宋体四号，行距与正文一致
+    \songti\fontsize{14pt}{21pt}\selectfont
 }
-{\clearpage}
-
-%摘要
+{
+    \par\vspace{4\baselineskip}
+    \begin{flushright}
+        \begin{tabular}{@{}l l@{}}
+            \songti\fontsize{14pt}{21pt}\selectfont 作者签名： & \underline{\hspace{4cm}} \\[1.5\baselineskip]
+            \songti\fontsize{14pt}{21pt}\selectfont 日\hspace{2em}期： & \underline{\hspace{4cm}}
+        \end{tabular}
+    \end{flushright}
+    \clearpage
+}
+% 摘要
 \newenvironment{cnabstract}[2]
 {
     \clearpage
-    \pagestyle{abstract}
-    \songti\fontsize{12pt}{20pt}\selectfont
+    \pagenumbering{Roman}
     
-    {
-        \centering
-        {\fontsize{16pt}{20pt}\selectfont \textbf{#1}\par}
-        {\bfseries 摘~~要\par}
+    \pagestyle{fancy}  
+    \noindent\makebox[\textwidth][c]{%
+        \heiti\fontsize{16pt}{16pt}\selectfont 摘\hspace{2em}要%
     }
     
-    \def\tempkeywords{#2} 
+    \par\vspace{0.5\baselineskip}
+    
+    \songti\fontsize{12pt}{18pt}\selectfont
+    \def\tempkeywords{#2}
 }
 {
-    \par
-    \noindent\hspace{2em}{\bfseries 关键词：}\tempkeywords
+    \\
+    \noindent{\heiti\fontsize{12pt}{18pt}\selectfont 关键词：\tempkeywords\par}
     \clearpage
 }
 
-\newenvironment{englishabstract}[2] % #1: Title, #2: Key words
+\newenvironment{englishabstract}[2]
 {
     \clearpage
-    \pagestyle{englishabstract}
-    \Times\fontsize{12pt}{20pt}\selectfont
-    
-    {
-        \centering
-        {\Arial\bfseries\fontsize{14pt}{20pt}\selectfont \MakeUppercase{#1}\par}
-        {\Arial\bfseries\fontsize{14pt}{20pt}\selectfont ABSTRACT\par}
+    \pagestyle{fancy}
+    % 标题
+    \noindent\makebox[\textwidth][c]{%
+        \Times\bfseries\fontsize{16pt}{16pt}\selectfont ABSTRACT%
     }
-    \def\tempekeywords{#2} 
+    
+    % 标题后 0.5 行
+    \par\vspace{0.5\baselineskip}
+    
+    % 正文：Times New Roman，小四，1.5倍行距
+    \Times\fontsize{12pt}{18pt}\selectfont
+    \def\tempekeywords{#2}
 }
-{
-    \par
-    \noindent\hspace{2em}{\Times\fontsize{12pt}{20pt}\selectfont \textbf{Key words: }}\tempekeywords
+{   
+	\\
+    % Key words：顶格，Times New Roman，加粗，小四，18pt行距
+    \noindent{\Times\bfseries\fontsize{12pt}{18pt}\selectfont Key words: \tempekeywords\par}
+    
     \clearpage
 }
 %目录
 %1. 引入宏包
 \usepackage[titles]{tocloft}
 
-%2. 统一字体定义
-\newcommand{\tocfont}{\songti\fontsize{12pt}{12pt}\selectfont}
+%2. 统一字体定义：目录内容小四，1.5倍行距
+\newcommand{\tocfont}{\songti\fontsize{12pt}{18pt}\selectfont}
 
-%3. 目录标题
-\renewcommand{\contentsname}{\centering\fontsize{22pt}{20pt}\selectfont\heiti 目录}
+%3. 目录标题：二号黑体居中
+\renewcommand{\contentsname}{\heiti\fontsize{22pt}{22pt}\selectfont 目录}
+
+% 目录标题前后间距：各 0.5 行
+\setlength{\cftbeforetoctitleskip}{10pt}
+\setlength{\cftaftertoctitleskip}{10pt}
 
 %4. 引导线疏密设置
+\renewcommand{\cftdotsep}{1}
 \renewcommand{\cftsecdotsep}{1}
 \renewcommand{\cftsubsecdotsep}{1}
 \renewcommand{\cftsubsubsecdotsep}{1}
 
-%5. 各级标题间距与格式设置
-% 一级标题 (第1章)
-\setlength{\cftbeforesecskip}{6pt} 
-\renewcommand{\cftsecfont}{\tocfont\bfseries}
-\renewcommand{\cftsecpagefont}{\tocfont\bfseries}
-\newlength{\secwidth}
-\settowidth{\secwidth}{\tocfont\bfseries 第88章\hspace{0.4em}}
-\setlength{\cftsecnumwidth}{\secwidth}
-
-% 二级标题 (1.1)
-\setlength{\cftbeforesubsecskip}{6pt}
-\renewcommand{\cftsubsecfont}{\tocfont}
+%5. 页码字体
+\renewcommand{\cftsecpagefont}{\tocfont}
 \renewcommand{\cftsubsecpagefont}{\tocfont}
-\setlength{\cftsubsecindent}{1.5em}
-\setlength{\cftsubsecnumwidth}{1.8em}
-
-% 三级标题 (1.1.1)
-\setlength{\cftbeforesubsubsecskip}{6pt}
-\renewcommand{\cftsubsubsecfont}{\tocfont}
 \renewcommand{\cftsubsubsecpagefont}{\tocfont}
-\setlength{\cftsubsubsecindent}{3em}
-\setlength{\cftsubsubsecnumwidth}{2.5em}
 
-% 目录生成命令
+% 一级标题
+\renewcommand{\cftsecfont}{\tocfont\bfseries}
+\setlength{\cftsecindent}{0em}
+\setlength{\cftsecnumwidth}{3.5em}
+\setlength{\cftbeforesecskip}{0pt}
+
+% 二级标题
+\renewcommand{\cftsubsecfont}{\tocfont}
+\setlength{\cftsubsecindent}{2em}
+\setlength{\cftsubsecnumwidth}{1.5em}
+\setlength{\cftbeforesubsecskip}{0pt}
+
+% 三级标题
+\renewcommand{\cftsubsubsecfont}{\tocfont}
+\setlength{\cftsubsubsecindent}{4em}
+\setlength{\cftsubsubsecnumwidth}{1.5em}
+\setlength{\cftbeforesubsubsecskip}{0pt}
+
 \newcommand{\contents}
 {
     \clearpage
-    \pagenumbering{Roman} 
+    
     \setlength{\parskip}{0pt}
     \ctexset{section={name={第,章}}}
-    \fancypagestyle{plain}{
-        \fancyhf{}
-        \fancyhead[C]{\fontsize{10.5pt}{12pt}\kai{计算机信息工程学院毕业设计说明书}}
-        \fancyfoot[C]{\songti\fontsize{9pt}{11pt}\selectfont\thepage}
-        \renewcommand{\headrulewidth}{0.4pt}
-    }
-    
+
+    \pagestyle{fancy}
+
     \tableofcontents
-    \thispagestyle{plain} 
+    
     \clearpage
 }
 
@@ -365,27 +387,43 @@
 {
     \clearpage
     \pagenumbering{arabic} 
-    \fancyfoot[C]{\songti\fontsize{12pt}{20pt}\selectfont\thepage} 
+	\fancyfoot[C]{\Times\fontsize{9pt}{11pt}\selectfont\thepage}
 }
 
 %9. 插图、表格、公式格式化
-
+\DeclareCaptionFont{five}{\songti\Times\fontsize{10.5pt}{15.75pt}\selectfont}
+% 三线表线宽（精确控制）
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\setlength{\heavyrulewidth}{0.053cm}   % 上下边线
+\setlength{\lightrulewidth}{0.0265cm}  % 表头分割线
+\DeclareCaptionFont{tablefont}{
+    \songti\Times\fontsize{10.5pt}{15.75pt}\selectfont
+}
+% 表题字体：五号，宋体+Times，1.5倍行距
+\captionsetup[table]{
+    font=tablefont,
+    labelsep=space,
+    justification=centering,
+    position=top,
+    skip=6pt,
+    singlelinecheck=false
+}
 % 编号按章计：图 1-1, 表 3-1, 公式 (2.3)
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
 \counterwithin{equation}{section}
 
-\renewcommand{\thefigure}{\thesection－\arabic{figure}}
-\renewcommand{\thetable}{\thesection－\arabic{table}}
-\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\thefigure}{\thesection-\arabic{figure}}
+\renewcommand{\thetable}{\thesection-\arabic{table}}
+\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
 
-\DeclareCaptionFont{five}{\songti\fontsize{10.5pt}{12pt}\selectfont}
-\DeclareCaptionLabelSeparator{customsep}{\hspace{1em}} % 编号与题名间空1个字距
 
 \captionsetup{
     font=five,
-    labelsep=customsep,
+    labelsep=space,
     justification=centering,
+    singlelinecheck=false
 }
 
 % 针对插图：图号图题在下
@@ -395,7 +433,11 @@
 
 % 公式括号形式
 \makeatletter
-\def\tagform@#1{\maketag@@@{(\ignorespaces#1\unskip\@@italiccorr)}}
+\def\tagform@#1{%
+    \maketag@@@{%
+        \mbox{\Times\fontsize{12pt}{12pt}\selectfont(#1)}%
+    }%
+}
 \makeatother
 
 % 10. 致谢环境
@@ -404,16 +446,27 @@
     \clearpage
     \section*{致谢}
     \addcontentsline{toc}{section}{致谢}
-    \songti\fontsize{12pt}{20pt}\selectfont 
+    \normalsize
 }
 {\clearpage}
 
 % 11. 参考文献格式
 \setcitestyle{open={[},close={]},citesep={,},super}
-
 \AtBeginEnvironment{thebibliography}{
-    \songti\fontsize{10.5pt}{20pt}\selectfont
+    % 字体：中文宋体，英文Times，五号，1.5倍行距
+    \songti\Times
+    \fontsize{10.5pt}{15.75pt}\selectfont
+    
+    % 字间距
     \xeCJKsetup{CJKglue=\hspace{0.2pt plus 0.05pt}}
+    
+    % 悬挂缩进2字符
+    \setlength{\bibhang}{2em}
+    
+    % 对齐控制
+    \setlength{\labelwidth}{2em}
+    \setlength{\leftmargin}{\labelwidth}
+    \addtolength{\leftmargin}{\labelsep}
 }
 
 
@@ -421,32 +474,23 @@
 \newenvironment{appendixsection}
 {
     \clearpage
-    \appendix
-    % 1. 编号格式
-    \renewcommand{\thesection}{\arabic{section}}
-    \ctexset{section={
-        name={附,},
-        number={\arabic{section}}
-    }}
-    % 2. 标题格式
-    \titleformat{\section}[block]
-        {\bfseries\heiti\fontsize{16pt}{20pt}\selectfont}
-        {\leavevmode\hrule height 0pt\relax 附\thesection}
-        {1em}{}
-        
-    % 3. 间距
-    \titlespacing*{\section}{0pt}{30pt}{20pt}
     
-    % 4. 附录正文设置
-    \songti\fontsize{12pt}{20pt}\selectfont
+    % 使用正文一级标题样式（不编号）
+    \section*{附录}
+    \addcontentsline{toc}{section}{附录}
+    
+    % 正文格式（与主体一致）
+    \songti\Times\fontsize{12pt}{18pt}\selectfont
     \xeCJKsetup{CJKglue=\hspace{0.2pt plus 0.05pt}}
 }
-{\clearpage}
-
+{
+    \clearpage
+}
+% 先定义 listing 浮动体
 \DeclareFloatingEnvironment[
     fileext=lol,
     listname={代码清单},
-    name={图}, 
+    name={图},
     placement=H
 ]{listing}
 
@@ -459,15 +503,20 @@
 \renewcommand{\thealgorithm}{\thesection－\arabic{algorithm}}
 \floatname{algorithm}{算法}
 \lstset{
-    basicstyle=\fontsize{10.5pt}{14pt}\selectfont\Times,
+    basicstyle=\songti\Times\fontsize{10.5pt}{12pt}\selectfont,
     columns=flexible,
     breaklines=true,
-    frame=single,
-    rulecolor=\color{black},
-    extendedchars=false,
+    breakatwhitespace=false,
+    frame=none,
+    backgroundcolor=\color[RGB]{217,217,217},
+    framesep=6pt,
     showstringspaces=false,
-    captionpos=b,
-    tabsize=4
+    showspaces=false,
+    showtabs=false,
+    keepspaces=true,
+    tabsize=4,
+    captionpos=b
 }
+
 
 \endinput

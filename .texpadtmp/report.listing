@@ -1,0 +1,3 @@
+tot = sum(sum(self.G[k].values()) + self._vid_vertex[k]_kin for k in self._cid_vertices[w_cid])
+if w_cid == v_cid:
+    tot -= k_v
