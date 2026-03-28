@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.8.6)  27 MAR 2026 23:38
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.8.6)  28 MAR 2026 22:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -962,11 +962,11 @@ Package tocloft Info: The document has section divisions on input line 51.
 \cfttabindent=\skip130
 \cfttabnumwidth=\skip131
 )
-Package newfloat Info: New float `listing' with options ` fileext=lol, listname={代码清单}, name={图}, placement=H ' on input line 495.
+Package newfloat Info: New float `listing' with options ` fileext=lol, listname={代码清单}, name={图}, placement=H ' on input line 516.
 \c@listing=\count392
-Package newfloat Info: float type `listing'=8 on input line 495.
+Package newfloat Info: float type `listing'=8 on input line 516.
 \c@loldepth=\count393
-Package caption Info: New subtype `sublisting' on input line 495.
+Package caption Info: New subtype `sublisting' on input line 516.
 \c@sublisting=\count394
 ) (/Users/wanglingyule/Documents/paper/常州工学院计算机信息学院本科生毕设latex模版/.texpadtmp/report.aux)
 \openout1 = `report.aux'.
@@ -1101,8 +1101,8 @@ Package hyperref Info: Link coloring OFF on input line 27.
 \c@lstlisting=\count395
 Package newfloat Info: Trying Plan B...
 Package newfloat Info: `float' package detected.
-File: figures/cit-name.pdf Graphic file (type pdf)
-<use figures/cit-name.pdf>
+File: figures/cit-name.png Graphic file (type bmp)
+<figures/cit-name.png>
 
 Package fontspec Info: 
 (fontspec)             Font family 'STZHONGS.ttf(0)' created for font
@@ -1228,10 +1228,10 @@ Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 3777E4D4334414181D1C5A55A1B8501E;983.
  ) 
 Here is how much of TeX's memory you used:
- 33835 strings out of 473832
- 717109 string characters out of 5729482
- 1106471 words of memory out of 5000000
- 56304 multiletter control sequences out of 15000+600000
+ 33839 strings out of 473832
+ 717153 string characters out of 5729482
+ 1106556 words of memory out of 5000000
+ 56308 multiletter control sequences out of 15000+600000
  569868 words of font info for 141 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  107i,11n,109p,1822b,953s stack positions out of 10000i,1000n,20000p,200000b,200000s

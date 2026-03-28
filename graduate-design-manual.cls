@@ -44,10 +44,29 @@
 \newCJKfontfamily{\heiti}{SimHei.ttf}[Path=fonts/, AutoFakeBold=3]
 \newCJKfontfamily{\kai}{Kaiti.ttf}[Path=fonts/]
 \newCJKfontfamily{\zhongsong}{STZHONGS.ttf}[Path=fonts/, AutoFakeBold=3.17]
-
 \setmainfont{times.ttf}[Path=fonts/, AutoFakeBold=3]
 \newfontfamily{\Times}{times.ttf}[Path=fonts/, AutoFakeBold=3]
 \newfontfamily{\Arial}{arial.ttf}[Path=fonts/, BoldFont=arialbd.ttf]
+% 单个数字（用于年份逐位）
+\newcommand{\digittochinese}[1]{%
+\ifcase#1 〇\or 一\or 二\or 三\or 四\or 五\or 六\or 七\or 八\or 九\fi
+}
+
+% 年份转中文（逐位）
+\newcommand{\yeartochinese}[1]{%
+\expandafter\yeartochinesehelper#1\relax
+}
+\def\yeartochinesehelper#1#2\relax{%
+\digittochinese{#1}%
+\ifx#2\empty\else
+\yeartochinesehelper#2\relax
+\fi
+}
+
+% 月份转中文
+\newcommand{\monthtochinese}[1]{%
+\ifcase#1 \or 一\or 二\or 三\or 四\or 五\or 六\or 七\or 八\or 九\or 十\or 十一\or 十二\fi
+}
 
 \xeCJKsetup{CJKglue=\hspace{0.2pt plus 0.05pt}}
 
@@ -185,13 +204,13 @@
     \begin{tikzpicture}[overlay,remember picture]
         \node[shape=rectangle,draw=black,minimum width =1.6cm, minimum height = 0.65cm,below left = 1.9cm and 2.6cm] at (current page.north east) {\songti\@classid};
 
-        \node[below=3.0cm, xshift=5mm] at (current page.north) {%
-            \includegraphics[width=0.5\linewidth]{figures/cit-name.pdf}};
+        \node[below=3.2cm, xshift=1mm] at (current page.north) {%
+            \includegraphics[scale=1]{figures/cit-name.png}};
 
-        \node[below=8.5cm, xshift=5mm] at (current page.north) {%
+        \node[below=8.7cm, xshift=5mm] at (current page.north) {%
             \color{black}\centering\zhongsong\fontsize{26pt}{26pt}{\textbf{毕\hspace{0.5em}业\hspace{0.5em}设\hspace{0.5em}计\hspace{0.5em}说\hspace{0.5em}明\hspace{0.5em}书}}};
 
-        \node[below right=11.00cm and 4.20cm](titleName) at (current page.north west) {%
+        \node[below right=12.00cm and 4.20cm](titleName) at (current page.north west) {%
             \color{black}\raggedleft\zhongsong\fontsize{18pt}{18pt}{\textbf{\hspace{36pt}题目：}}};
         \DynamicUnderline{\@title}
 
@@ -250,7 +269,9 @@
         \draw (ReviewingTeacherTitleContents.south west) -- (ReviewingTeacherTitleContents.south east);
         
         \node[above=3.40cm, xshift=5mm] at (current page.south) {
-            \color{black}\centering\fontsize{15pt}{15pt}\Times{\@Year}\songti{年}\Times{\@Month}\songti{月}};
+    		\color{black}\centering\songti\fontsize{15pt}{15pt}
+    		\yeartochinese{\@Year}年\monthtochinese{\@Month}月
+};
     \end{tikzpicture}
     \newpage
 }
@@ -341,10 +362,10 @@
 \setlength{\cftaftertoctitleskip}{10pt}
 
 %4. 引导线疏密设置
-\renewcommand{\cftdotsep}{1}
-\renewcommand{\cftsecdotsep}{1}
-\renewcommand{\cftsubsecdotsep}{1}
-\renewcommand{\cftsubsubsecdotsep}{1}
+\renewcommand{\cftdotsep}{0.3}
+\renewcommand{\cftsecdotsep}{0.3}
+\renewcommand{\cftsubsecdotsep}{0.3}
+\renewcommand{\cftsubsubsecdotsep}{0.3}
 
 %5. 页码字体
 \renewcommand{\cftsecpagefont}{\tocfont}
