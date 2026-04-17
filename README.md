@@ -10,11 +10,37 @@
 * **参考文献工具**: BibTeX (配合 `gbt7714` 样式)。
 * **操作系统**: Windows / macOS / Linux (已配置跨平台字体路径兼容)。
 
-## 3. 目录结构说明
+## 3. Make 编译
+
+当前分支提供了基于 `make` 的编译方式，使用 `XeLaTeX + BibTeX` 完成论文编译。
+
+```bash
+make
+```
+
+执行后：
+
+* 所有中间文件会输出到 `.tmp/`
+* 项目根目录只保留最终生成的 `report.pdf`
+
+清理命令：
+
+```bash
+make clean
+make distclean
+```
+
+说明：
+
+* `make clean`：删除 `.tmp/`
+* `make distclean`：删除 `.tmp/` 和 `report.pdf`
+
+## 4. 目录结构说明
 ```text
 .
 ├── graduate-design-manual.cls   # 核心类文件：定义了论文的所有格式规范
 ├── report.tex                   # 论文主文件 (如适用)
+├── Makefile                     # make 编译入口
 ├── fonts/                       # 本地字体库 (必须包含，由 .cls 文件调用)
 │   ├── Simsun.ttc               # 宋体
 │   ├── SimHei.ttf               # 黑体
