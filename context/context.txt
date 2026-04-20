@@ -1,0 +1,11 @@
+[2026-04-18] Task 6-7 executed.
+- Modified scripts/build_manual.sh to include symlinks for fonts, figures, gbt7714 to solve nullfont missing character errors.
+- Executed four-pass LaTeX build (xelatex -> bibtex -> xelatex -> xelatex).
+- Updated prd.json and progress.txt states to done.
+- Committed all files successfully.
+
+[2026-04-19] Skills framework extracted and mapped from prompt.md.
+- Created latex-infrastructure/SKILL.md for LaTeX project compilation rules.
+- Created research-and-sourcing/SKILL.md for strict data sourcing SOPs.
+- Created content-and-graphics/SKILL.md for AI rewrite constraints and Figma SVG processes.
+- Created vibe-coding-engineering/SKILL.md for strict agentic workflows, Ralph state machine, and Token cost reduction.

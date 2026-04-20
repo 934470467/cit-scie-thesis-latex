@@ -1,0 +1,9 @@
+---
+2026-04-17 初始化
+---
+[Task 0] 遇到了无法连接 Github 进行 `git clone` 的代理端口报错 (17569/10808)。网络受限。
+[Task 1-3] 完成对三个 LaTeX skill 文件的极限压缩，符合 User Rule 中的 "Extreme Token Saving" 标准，去除了所有示例、摘要和多余文字。这部分无需依赖 GitHub 网络，已前置完成。
+[Task 4] | None | Created main.tex structure | Done
+[Task 5] | None | Filled chapter contents from skills | Done
+[Task 6] | Missing fonts | Added symlinks to build_manual.sh | Done
+[Task 7] | None | Executed build & committed | Done

@@ -34,6 +34,12 @@ make distclean
 ├── graduate-design-manual.cls   # 核心类文件：定义了论文的所有格式规范
 ├── report.tex                   # 论文主文件 (如适用)
 ├── Makefile                     # make 编译入口
+├── docs/
+│   └── manual/                  # LaTeX 使用手册源码
+│       ├── main.tex             # 手册入口文件
+│       └── chapter*.tex         # 手册各章节内容
+├── scripts/
+│   └── build_manual.sh          # 自动化手册编译脚本
 ├── fonts/                       # 本地字体库 (必须包含，由 .cls 文件调用)
 │   ├── Simsun.ttc               # 宋体
 │   ├── SimHei.ttf               # 黑体
@@ -44,7 +50,7 @@ make distclean
 ├── figures/                     # 插图文件夹
 │   ├── cit-name.pdf             # 封面校名矢量图
 │   └── *.png/*.pdf              # 实验结果、电路图、流程图等
-└──  gbt7714/                     # 参考文献 GB/T 7714 标准样式包
+└── gbt7714/                     # 参考文献 GB/T 7714 标准样式包
 ```
 
 如有更改需求，请PR提交。
