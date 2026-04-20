@@ -31,9 +31,70 @@ description: 论文逻辑骨架、内容扩写与图表生成标准作业程序
 
 - **扩写操作流**：`确定缺漏信息 -> 收集数据/文献作为补充输入 -> 附加以上 Prompt 进行扩展`。
 
-## 3. 矢量图表生成与二次重绘 (AI + Figma)
+## 3. 学术图表生成
 学术论文要求图表具备高清晰度和统一审美，**坚决抵制直接截图**。
 - **质量优先级**：`自己代码绘图(如Python) > AI+Figma重绘 > 截取原图`
+
+### 3.1 Python 学术绘图 SOP (最优路径)
+适用于：数据对比图、实验结果图、统计分析图等一切**可由数据驱动**的图表。
+
+- **工具栈**：`matplotlib` + `seaborn`(统计图) + `pandas`(数据预处理)
+- **图表类型决策**：
+
+| 数据场景 | 推荐图表 | 核心 API |
+|---|---|---|
+| 趋势/时序变化 | 折线图 | `plt.plot()` |
+| 分类对比 | 柱状图 | `plt.bar()` / `sns.barplot()` |
+| 分布/离群值 | 箱线图 | `sns.boxplot()` |
+| 变量相关性 | 热力图 | `sns.heatmap()` |
+| 多维聚类 | 散点图 | `plt.scatter()` |
+
+- **国内学位论文风格模板** (每次绘图前强制执行)：
+  - 国内规范：中文宋体(正文)/黑体(标题)，英文/数字 Times New Roman，字号小四(10.5pt)
+  - 跨平台策略：字体优先级链自动匹配，Windows 命中 SimSun/SimHei，macOS 命中 STSong/STHeiti，无需手动装字体
+```python
+import matplotlib.pyplot as plt
+
+plt.rcParams.update({
+    # --- 字体：优先级链 (Win→Mac→Linux 自动匹配) ---
+    'font.family': 'serif',
+    'font.serif': ['SimSun', 'STSong', 'Songti SC', 'Times New Roman'],
+    'font.sans-serif': ['SimHei', 'STHeiti', 'Heiti SC', 'PingFang SC'],
+    'mathtext.fontset': 'stix',  # 数学公式与 Times New Roman 视觉一致
+    'axes.unicode_minus': False,  # 负号显示修复 (必须)
+    # --- 尺寸：对标国内学位论文 ---
+    'font.size': 10.5,       # 小四号
+    'axes.labelsize': 12,    # 轴标签
+    'axes.titlesize': 14,    # 图标题
+    'legend.fontsize': 10,
+    'figure.figsize': (8, 5),
+    'figure.dpi': 300,
+    # --- 学术审美 ---
+    'axes.spines.top': False,
+    'axes.spines.right': False,
+})
+```
+  - **⚠️ 翻车急救**：若中文仍显示方块，执行以下清缓存后重启 Python：
+```python
+import matplotlib; print(matplotlib.get_cachedir())
+# 删除该目录下 fontlist-*.json，然后重启
+```
+- **输出规范**：
+  - 格式：优先 PDF (矢量)，次选 PNG (dpi≥300)
+  - 命令：`plt.savefig('figures/实验结果_对比.pdf', bbox_inches='tight', dpi=300)`
+  - LaTeX 数学标注：标题/轴标签中使用 `$...$` 嵌入公式
+- **无头环境兼容** (CI/远程服务器)：
+```python
+import os, matplotlib
+if 'DISPLAY' not in os.environ:
+    matplotlib.use('Agg')
+```
+- **过程快照策略**：对动态/迭代实验，在关键阶段调用 `plt.savefig()` 记录中间状态，用于报告中展示算法演进过程。
+- **操作流**：`准备数据(pandas) -> 套用风格模板 -> 选择图表类型 -> 添加标注/图例 -> savefig到figures/`
+
+### 3.2 矢量图表重绘 SOP (AI + Figma)
+适用于：架构图、流程图、概念模型等**逻辑驱动**的非数据图表。
+
 - **Figma 矢量制图 SOP**:
   1. **逻辑建模**：使用 AI (PlantUML 等语法) 梳理出严密的图表逻辑。
   2. **生成 SVG**：要求 AI 输出包含 `<g>`(分组) 和 `<text>`(文字) 标签的标准 SVG 源码。
