@@ -26,3 +26,11 @@
 
 # Keep generated PDFs tracked by default
 !*.pdf
+
+# ---------------------------------------------------
+# Vibe Coding & Agent tracking (User specific, DO NOT COMMIT)
+# ---------------------------------------------------
+context/context.txt
+context/memory.md
+prds/prd.json
+prds/prd.md
