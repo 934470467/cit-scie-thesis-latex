@@ -15,7 +15,7 @@ all: pdf
 
 pdf: $(PDF)
 
-$(PDF): $(SRC)
+$(PDF): $(SRC) graduate-design-manual.cls $(MAIN).bib
 	mkdir -p $(OUTDIR)
 	$(XELATEX) $(XELATEX_FLAGS) $(SRC)
 	awk 'BEGIN{seen=0} index($$0,"\\bibstyle{")==1 {if (seen) next; seen=1} {print}' $(OUTDIR)/$(MAIN).aux > $(OUTDIR)/$(MAIN).aux.tmp

@@ -20,9 +20,6 @@
 \RequirePackage{float}
 \RequirePackage[labelfont=bf,justification=centering]{caption}
 \RequirePackage{tabularx, booktabs, longtable, multirow}
-\RequirePackage[superscript]{cite}
-\renewcommand\citeleft{[}
-\renewcommand\citeright{]}
 \RequirePackage[pdfusetitle, hidelinks]{hyperref}
 \RequirePackage[numbers,super,square]{gbt7714}
 \RequirePackage{tikz}
@@ -44,8 +41,8 @@
 \newCJKfontfamily{\heiti}{SimHei.ttf}[Path=fonts/, AutoFakeBold=3]
 \newCJKfontfamily{\kai}{Kaiti.ttf}[Path=fonts/]
 \newCJKfontfamily{\zhongsong}{STZHONGS.ttf}[Path=fonts/, AutoFakeBold=3.17]
-\setmainfont{times.ttf}[Path=fonts/, AutoFakeBold=3]
-\newfontfamily{\Times}{times.ttf}[Path=fonts/, AutoFakeBold=3]
+\setmainfont{times.ttf}[Path=fonts/, BoldFont=times.ttf, AutoFakeBold=3]
+\newfontfamily{\Times}{times.ttf}[Path=fonts/, BoldFont=times.ttf, AutoFakeBold=3]
 \newfontfamily{\Arial}{arial.ttf}[Path=fonts/, BoldFont=arialbd.ttf]
 % 单个数字（用于年份逐位）
 \newcommand{\digittochinese}[1]{%
@@ -153,10 +150,14 @@
 % 页脚设置
 \fancyfoot[C]{\Times\fontsize{9pt}{11pt}\selectfont\thepage}
 \fancypagestyle{abstract}{
-    \pagestyle{fancy} % 直接使用标准奇偶页眉
+    \fancyhf{}
+    \fancyhead[C]{\fontsize{10.5pt}{12pt}\kai{计算机信息工程学院毕业设计说明书}}
+    \fancyfoot{}
 }
 \fancypagestyle{englishabstract}{
-    \pagestyle{fancy} % 直接使用标准奇偶页眉
+    \fancyhf{}
+    \fancyhead[C]{\fontsize{10.5pt}{12pt}\kai{计算机信息工程学院毕业设计说明书}}
+    \fancyfoot{}
 }
 
 % 5. 标题格式
@@ -183,16 +184,31 @@
     {0.5em}{}
 \titlespacing*{\subsubsection}{0pt}{0.5\baselineskip}{0.5\baselineskip}
 
-% 6. 封面绘制辅助宏
-\newcommand{\DynamicUnderline}[1]{%
-    \settowidth{\@tempdima}{\strut\centering\textbf{\zhongsong\fontsize{18pt}{18pt}\selectfont #1}}%
+% 6. 封面标题绘制
+% 用法：
+%   \covertitle{第一行}{第二行}   —— 两行
+%   \covertitle{第一行}{}         —— 单行
+%   （\title{...} 仍由页眉 / PDF 元数据使用，和封面相互独立）
+\newdimen\coverTitleAreaWidth
+\coverTitleAreaWidth=10.67cm
+\def\@coverTitleFirst{}
+\def\@coverTitleSecond{}
+\newcommand{\covertitle}[2]{%
+    \gdef\@coverTitleFirst{#1}%
+    \gdef\@coverTitleSecond{#2}%
+}
+\newcommand{\DrawCoverTitle}{%
     \node[right=1mm, anchor=north west](title) at (titleName.north east) {%
-        \begin{minipage}[t][2.8cm][t]{9.4cm}
-            \color{black}\zhongsong\fontsize{18pt}{45pt}\centering\selectfont #1
+        \begin{minipage}[t][2.8cm][t]{\coverTitleAreaWidth}
+            \centering\zhongsong\fontsize{18pt}{45pt}\selectfont
+            \@coverTitleFirst
+            \ifx\@coverTitleSecond\@empty\else\par\@coverTitleSecond\fi
         \end{minipage}
     };
-    \draw (title.west)++(0mm,6mm) -- +(94mm,0cm);
-    \ifdim\@tempdima>9.4cm \draw (title.south west)++(0mm,1mm) -- +(94mm,0cm); \fi
+    \draw (title.south west)++(0mm,23mm) -- ++(\coverTitleAreaWidth,0mm);
+    \ifx\@coverTitleSecond\@empty\else
+        \draw (title.south west)++(0mm,8mm) -- ++(\coverTitleAreaWidth,0mm);
+    \fi
 }
 
 % 7. 封面主命令
@@ -207,14 +223,20 @@
         \node[below=3.2cm, xshift=1mm] at (current page.north) {%
             \includegraphics[scale=1]{figures/cit-name.png}};
 
-        \node[below=8.7cm, xshift=5mm] at (current page.north) {%
+        \node[below=7.4cm, xshift=5mm] at (current page.north) {%
             \color{black}\centering\zhongsong\fontsize{26pt}{26pt}{\textbf{毕\hspace{0.5em}业\hspace{0.5em}设\hspace{0.5em}计\hspace{0.5em}说\hspace{0.5em}明\hspace{0.5em}书}}};
 
-        \node[below right=12.00cm and 4.20cm](titleName) at (current page.north west) {%
-            \color{black}\raggedleft\zhongsong\fontsize{18pt}{18pt}{\textbf{\hspace{36pt}题目：}}};
-        \DynamicUnderline{\@title}
+        \node[below right=12.00cm and 4.20cm, opacity=0](titleFieldAnchor) at (current page.north west) {%
+            \zhongsong\fontsize{18pt}{18pt}{\textbf{\hspace{36pt}题目：}}};
+        \coordinate (coverFieldWest) at ([xshift=1mm]titleFieldAnchor.north east);
+        \node[anchor=north east, opacity=0](coverLabelGuide) at ([xshift=-0.1cm]coverFieldWest) {%
+            \songti\fontsize{15pt}{33pt}\selectfont 二级学院：};
+        \node[anchor=north west](titleName) at (coverLabelGuide.north west) {%
+            \color{black}\raggedright\zhongsong\fontsize{18pt}{18pt}{\textbf{题目：}}};
+        \DrawCoverTitle
+        \coordinate (coverFieldStart) at (coverFieldWest |- title.south west);
 
-        \node[below left=1.25cm and 0.1cm,anchor=north east](Academy) at (title.south west) {
+        \node[below left=1.25cm and 0.1cm,anchor=north east](Academy) at (coverFieldStart) {
             \color{black}\raggedright\songti\fontsize{15pt}{33pt}{二级学院：}};
         \node[right=1mm,minimum height = 0.6cm,minimum width =9.4cm](AcademyContents) at (Academy.east){
             \color{black}\centering\songti\fontsize{15pt}{33pt}{\@academy}};
@@ -293,12 +315,13 @@
     \songti\fontsize{14pt}{21pt}\selectfont
 }
 {
-    \par\vspace{4\baselineskip}
+    \par\vspace{9\baselineskip}
     \begin{flushright}
-        \begin{tabular}{@{}l l@{}}
-            \songti\fontsize{14pt}{21pt}\selectfont 作者签名： & \underline{\hspace{4cm}} \\[1.5\baselineskip]
-            \songti\fontsize{14pt}{21pt}\selectfont 日\hspace{2em}期： & \underline{\hspace{4cm}}
-        \end{tabular}
+        \begin{tabular}{@{}l@{}}
+            \songti\fontsize{14pt}{21pt}\selectfont 作者签名： \\[\baselineskip]
+            ~ \\[\baselineskip]
+            \songti\fontsize{14pt}{21pt}\selectfont 日\hspace{2em}期：
+        \end{tabular}\hspace*{2.7cm}
     \end{flushright}
     \clearpage
 }
@@ -306,45 +329,39 @@
 \newenvironment{cnabstract}[2]
 {
     \clearpage
-    \pagenumbering{Roman}
-    
-    \pagestyle{fancy}  
-    \noindent\makebox[\textwidth][c]{%
-        \heiti\fontsize{16pt}{16pt}\selectfont 摘\hspace{2em}要%
+    \pagestyle{abstract}
+    \songti\fontsize{12pt}{20pt}\selectfont
+
+    {
+        \centering
+        {\fontsize{16pt}{20pt}\selectfont \textbf{#1}\par}
+        {\bfseries 摘~~要\par}
     }
-    
-    \par\vspace{0.5\baselineskip}
-    
-    \songti\fontsize{12pt}{18pt}\selectfont
+
     \def\tempkeywords{#2}
 }
 {
-    \\
-    \noindent{\heiti\fontsize{12pt}{18pt}\selectfont 关键词：\tempkeywords\par}
+    \par
+    \noindent{\songti\bfseries\fontsize{12pt}{20pt}\selectfont 关键词：}\tempkeywords
     \clearpage
 }
 
-\newenvironment{englishabstract}[2]
+\newenvironment{englishabstract}[2] % #1: Title, #2: Key words
 {
     \clearpage
-    \pagestyle{fancy}
-    % 标题
-    \noindent\makebox[\textwidth][c]{%
-        \Times\bfseries\fontsize{16pt}{16pt}\selectfont ABSTRACT%
+    \pagestyle{englishabstract}
+    \Times\fontsize{12pt}{20pt}\selectfont
+
+    {
+        \centering
+        {\Arial\bfseries\fontsize{14pt}{20pt}\selectfont \MakeUppercase{#1}\par}
+        {\Arial\bfseries\fontsize{14pt}{20pt}\selectfont ABSTRACT\par}
     }
-    
-    % 标题后 0.5 行
-    \par\vspace{0.5\baselineskip}
-    
-    % 正文：Times New Roman，小四，1.5倍行距
-    \Times\fontsize{12pt}{18pt}\selectfont
     \def\tempekeywords{#2}
 }
-{   
-	\\
-    % Key words：顶格，Times New Roman，加粗，小四，18pt行距
-    \noindent{\Times\bfseries\fontsize{12pt}{18pt}\selectfont Key words: \tempekeywords\par}
-    
+{
+    \par
+    \noindent{\Times\bfseries\fontsize{12pt}{20pt}\selectfont Keywords: }\tempekeywords
     \clearpage
 }
 %目录
@@ -354,8 +371,8 @@
 %2. 统一字体定义：目录内容小四，1.5倍行距
 \newcommand{\tocfont}{\songti\fontsize{12pt}{18pt}\selectfont}
 
-%3. 目录标题：二号黑体居中
-\renewcommand{\contentsname}{\heiti\fontsize{22pt}{22pt}\selectfont 目录}
+%3. 目录标题：二号宋体加粗居中
+\renewcommand{\contentsname}{\songti\bfseries\fontsize{22pt}{22pt}\selectfont 目录}
 
 % 目录标题前后间距：各 0.5 行
 \setlength{\cftbeforetoctitleskip}{10pt}
@@ -407,6 +424,7 @@
 \newcommand{\mainbody}
 {
     \clearpage
+    \pagestyle{fancy}
     \pagenumbering{arabic} 
 	\fancyfoot[C]{\Times\fontsize{9pt}{11pt}\selectfont\thepage}
 }
@@ -424,7 +442,7 @@
 % 表题字体：五号，宋体+Times，1.5倍行距
 \captionsetup[table]{
     font=tablefont,
-    labelsep=space,
+    labelsep=quad,
     justification=centering,
     position=top,
     skip=6pt,
@@ -437,12 +455,12 @@
 
 \renewcommand{\thefigure}{\thesection-\arabic{figure}}
 \renewcommand{\thetable}{\thesection-\arabic{table}}
-\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
 
 
 \captionsetup{
     font=five,
-    labelsep=space,
+    labelsep=quad,
     justification=centering,
     singlelinecheck=false
 }
@@ -456,7 +474,7 @@
 \makeatletter
 \def\tagform@#1{%
     \maketag@@@{%
-        \mbox{\Times\fontsize{12pt}{12pt}\selectfont(#1)}%
+        \mbox{\Times\fontsize{10.5pt}{10.5pt}\selectfont(#1)}%
     }%
 }
 \makeatother
@@ -473,16 +491,26 @@
 
 % 11. 参考文献格式
 \setcitestyle{open={[},close={]},citesep={,},super}
+\renewcommand{\bibsection}{%
+    \section*{参考文献}
+    \addcontentsline{toc}{section}{参考文献}
+}
 \AtBeginEnvironment{thebibliography}{
-    % 字体：中文宋体，英文Times，五号，1.5倍行距
+    % 字体：中文宋体，英文Times，五号，固定20磅行距
     \songti\Times
-    \fontsize{10.5pt}{15.75pt}\selectfont
+    \fontsize{10.5pt}{20pt}\selectfont
     
     % 字间距
     \xeCJKsetup{CJKglue=\hspace{0.2pt plus 0.05pt}}
     
     % 悬挂缩进2字符
     \setlength{\bibhang}{2em}
+
+    % 只保留20磅行距，不叠加条目额外间距
+    \setlength{\bibsep}{0pt}
+    \setlength{\itemsep}{0pt}
+    \setlength{\parsep}{0pt}
+    \setlength{\parskip}{0pt}
     
     % 对齐控制
     \setlength{\labelwidth}{2em}
@@ -517,11 +545,11 @@
 
 % 设置代码编号按章排序，例如：图 3－1
 \counterwithin{listing}{section}
-\renewcommand{\thelisting}{\thesection－\arabic{listing}}
+\renewcommand{\thelisting}{\thesection-\arabic{listing}}
 
-% 设置算法编号按章排序，例如：算法 3－1
+% 设置算法编号按章排序，例如：算法 3-1
 \counterwithin{algorithm}{section}
-\renewcommand{\thealgorithm}{\thesection－\arabic{algorithm}}
+\renewcommand{\thealgorithm}{\thesection-\arabic{algorithm}}
 \floatname{algorithm}{算法}
 \lstset{
     basicstyle=\songti\Times\fontsize{10.5pt}{12pt}\selectfont,

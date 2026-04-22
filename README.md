@@ -10,7 +10,21 @@
 * **参考文献工具**: BibTeX (配合 `gbt7714` 样式)。
 * **操作系统**: Windows / macOS / Linux (已配置跨平台字体路径兼容)。
 
-## 3. 编译
+## 3. 获取模板
+
+推荐使用浅克隆，只获取最新一层提交，不下载完整历史记录：
+
+```bash
+git clone --depth 1 https://github.com/934470467/cit-scie-thesis-latex.git
+```
+
+如果已经克隆过仓库，后续更新可在项目目录中执行：
+
+```bash
+git pull
+```
+
+## 4. 编译
 
 支持overleaf、VSCode(LaTeX Workshop)、TeXstudio、等主流工具平台外。我们也提供了基于 `make` 的命令行编译方式。
 
@@ -28,11 +42,18 @@ make clean
 make distclean
 ```
 
-## 4. 目录结构说明
+## 5. Overleaf 上传说明
+
+如果要上传到 Overleaf，可以将项目目录压缩为 zip 后上传。
+
+如果 Overleaf 提示 zip 文件过大，优先删除压缩包里的 `.git` 文件夹；该目录只保存 Git 历史记录，删除后不会影响 LaTeX 编译。也建议不要上传 `.tmp/`、`.DS_Store` 等临时文件。
+
+## 6. 目录结构说明
 ```text
 .
 ├── graduate-design-manual.cls   # 核心类文件：定义了论文的所有格式规范
 ├── report.tex                   # 论文主文件 (如适用)
+├── report.bib                   # BibTeX 参考文献数据库
 ├── Makefile                     # make 编译入口
 ├── fonts/                       # 本地字体库 (必须包含，由 .cls 文件调用)
 │   ├── Simsun.ttc               # 宋体
@@ -43,10 +64,9 @@ make distclean
 │   └── arial.ttf                # Arial
 ├── figures/                     # 插图文件夹
 │   ├── cit-name.pdf             # 封面校名矢量图
-│   └── *.png/*.pdf              # 实验结果、电路图、流程图等
-└──  gbt7714/                     # 参考文献 GB/T 7714 标准样式包
+│   └── cit-name.png             # 封面校名图片
+└── gbt7714/                     # 参考文献 GB/T 7714 标准样式包
 ```
 
 如有更改需求，请PR提交。
 
-> 不久将更新适合常工院毕业设计的skills。

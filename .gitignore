@@ -23,6 +23,7 @@
 
 # Editor / OS files
 .DS_Store
+.claude/
 
 # Keep generated PDFs tracked by default
 !*.pdf
