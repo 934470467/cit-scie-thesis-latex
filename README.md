@@ -26,7 +26,9 @@ git pull
 
 ## 4. 编译
 
-支持overleaf、VSCode(LaTeX Workshop)、TeXstudio、等主流工具平台外。我们也提供了基于 `make` 的命令行编译方式。
+支持 Overleaf、VSCode(LaTeX Workshop)、TeXstudio 等主流工具平台外。我们也提供了基于 `make` 的命令行编译方式。
+
+`make` 编译方式适合 macOS、Linux 和 Windows WSL 环境；Windows 原生 cmd / PowerShell 用户建议使用 Overleaf、VSCode(LaTeX Workshop) 或 TeXstudio 编译。
 
 请使用 `XeLaTeX + BibTeX` 完成论文编译。
 
@@ -69,4 +71,3 @@ make distclean
 ```
 
 如有更改需求，请PR提交。
-
